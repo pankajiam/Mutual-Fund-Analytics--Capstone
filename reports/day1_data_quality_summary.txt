@@ -1,0 +1,27 @@
+
+DAY 1  DATA QUALITY SUMMARY
+==============================
+
+ANOMALIES FOUND:
+1. amfi_code loads as int64 (number) across multiple files, though it is
+   an ID/code, not a quantity. it should be treated as text/string
+   in cleaning, to avoid risks like dropped leading zeros.
+
+2. 04_monthly_sip_inflows.csv: yoy_growth_pct is NaN for the first 12
+   months (Jan-Dec 2022). This is not an error though, since no
+   prior-year (2021) data exists in this dataset to compare against.
+
+3. fund_master.csv contains only 'Equity' and 'Debt' categories, while
+   the project's business context mentioning Hybrid schemes as well.
+
+AMFI CODE VALIDATION:
+- Total unique codes in fund_master: 40
+- Total unique codes in nav_history: 40
+- Missing codes: 0 (all fund_master codes have matching NAV history)
+
+LIVE API FINDING (mfapi.in):
+- AMFI scheme codes referenced in the project brief (and confirmed
+  against fund_master.csv) do not match mfapi.in's current live
+  registry. 5 of 6 tested codes returned unrelated funds. Only Nippon
+  Large Cap (118632) matched correctly. it's not a data entry error, which i have confirmed. therefore,
+   Live data was still fetched and saved as returned by the API.
