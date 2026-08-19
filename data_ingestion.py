@@ -57,16 +57,16 @@ else:
 
 
 summary_text = """
-DAY 1 — DATA QUALITY SUMMARY
+DAY 1  DATA QUALITY SUMMARY
 ==============================
 
 ANOMALIES FOUND:
 1. amfi_code loads as int64 (number) across multiple files, though it is
-   really an ID/code, not a quantity. Recommend treating as text/string
-   in Day 2 cleaning, to avoid risks like dropped leading zeros.
+   ID/code, not a quantity. it should be treated as text/string
+   while cleaning, to avoid risks like dropped leading zeros.
 
 2. 04_monthly_sip_inflows.csv: yoy_growth_pct is NaN for the first 12
-   months (Jan-Dec 2022). This is expected, not an error, since no
+   months (Jan-Dec 2022). This is not an error, since no
    prior-year (2021) data exists in this dataset to compare against.
 
 3. fund_master.csv contains only 'Equity' and 'Debt' categories, despite
@@ -81,9 +81,7 @@ LIVE API FINDING (mfapi.in):
 - AMFI scheme codes referenced in the project brief (and confirmed
   against fund_master.csv) do not match mfapi.in's current live
   registry. 5 of 6 tested codes returned unrelated funds. Only Nippon
-  Large Cap (118632) matched correctly. This points to a drift in
-  mfapi.in's scheme code mapping since this project's dataset was
-  generated, not a data entry error on our side. Live data was still
+  Large Cap (118632) matched correctly.Live data was still
   fetched and saved as returned by the API.
 """
 
